@@ -23,5 +23,5 @@ func main() {
 	start := time.Now()
 	mungeInit(args.Level, args.Word, args.Output, args.D, args.Input)
 	duration := time.Since(start)
-	color.Greenp("Finished in: ", duration)
+	color.Cyanln("Finished in:", duration)
 }
