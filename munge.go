@@ -49,6 +49,7 @@ func readWordList(path string) {
 	if err != nil {
 		color.Error.Println("Error reading the file!")
 	}
+	defer readFile.Close()
 
 	fileScanner := bufio.NewScanner(readFile)
 	fileScanner.Split(bufio.ScanLines)
@@ -56,8 +57,6 @@ func readWordList(path string) {
 	for fileScanner.Scan() {
 		inputFileLines = append(inputFileLines, fileScanner.Text())
 	}
-
-	readFile.Close()
 }
 
 func writeMunge(fileName string) {
@@ -71,6 +70,7 @@ func writeMunge(fileName string) {
 	if err != nil {
 		color.Error.Println("Failed creating file!")
 	}
+	defer file.Close()
 
 	datawriter := bufio.NewWriter(file)
 
@@ -80,7 +80,6 @@ func writeMunge(fileName string) {
 
 	color.Greenp("Saved to ", args.Output)
 	datawriter.Flush()
-	file.Close()
 }
 
 func removeDuplication(arr []string) []string {
