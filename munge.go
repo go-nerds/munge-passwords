@@ -78,7 +78,7 @@ func writeMunge(fileName string) {
 		_, _ = datawriter.WriteString(data + "\n")
 	}
 
-	color.Greenp("Saved to ", args.Output)
+	color.Greenp("Saved to ", args.Output, "\n")
 	datawriter.Flush()
 }
 
