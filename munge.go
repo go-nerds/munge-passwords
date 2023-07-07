@@ -6,6 +6,8 @@ import (
 	"strings"
 
 	"github.com/gookit/color"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 var tmpWordList []string
@@ -103,13 +105,14 @@ func removeDuplication(arr []string) []string {
 }
 
 func munge(wrd string, level int) {
+	caser := cases.Title(language.English)
 	if level > 0 {
 		tmpWordList = append(tmpWordList, wrd)
 		tmpWordList = append(tmpWordList, strings.ToUpper(wrd))
-		tmpWordList = append(tmpWordList, strings.Title(wrd))
+		tmpWordList = append(tmpWordList, caser.String(wrd))
 	}
 	if level > 2 {
-		temp := strings.Title(wrd)
+		temp := caser.String(wrd)
 		tmpWordList = append(tmpWordList, strings.ToLower(temp))
 	}
 	if level > 4 {
