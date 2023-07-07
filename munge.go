@@ -87,7 +87,7 @@ func removeDuplication(arr []string) []string {
 	map_var := map[string]bool{}
 	result := []string{}
 	for e := range arr {
-		if map_var[arr[e]] != true {
+		if !map_var[arr[e]] {
 			map_var[arr[e]] = true
 			result = append(result, arr[e])
 		}
