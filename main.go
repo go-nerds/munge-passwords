@@ -24,7 +24,11 @@ func main() {
 	color.Yellowln("Processing...")
 	start := time.Now()
 
-	mungeInit(userInput)
+	err := mungeInit(userInput)
+	if err != nil {
+		color.Errorln("Error:", err)
+		return
+	}
 
 	duration := time.Since(start)
 	color.Cyanln("Finished in:", duration)
