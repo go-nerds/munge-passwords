@@ -39,13 +39,16 @@ func mungeInit(arg UserInput) {
 			mungeword(line, level)
 		}
 
+		writeMunge(output)
+
 	} else if wordListPath == "" && input != "" {
 		mungeword(input, level)
+
+		writeMunge(output)
+
 	} else {
 		color.Error.Println("Input or wordlist required!")
 	}
-
-	writeMunge(output)
 }
 
 func readWordList(path string) {
