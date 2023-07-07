@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"os"
 	"strings"
 
@@ -13,8 +14,7 @@ import (
 var tmpWordList []string
 var inputFileLines []string
 
-func mungeInit(arg UserInput) {
-
+func mungeInit(arg UserInput) error {
 	level := arg.Level
 	wordListPath := arg.Word
 	input := arg.Input
@@ -30,8 +30,10 @@ func mungeInit(arg UserInput) {
 	}
 
 	if wordListPath != "" && input == "" {
-
-		readWordList(wordListPath)
+		err := readWordList(wordListPath)
+		if err != nil {
+			return err
+		}
 
 		if rDeplicate {
 			inputFileLines = removeDuplication(inputFileLines)
@@ -40,24 +42,24 @@ func mungeInit(arg UserInput) {
 		for _, line := range inputFileLines {
 			mungeword(line, level)
 		}
-
-		writeMunge(output)
-
 	} else if wordListPath == "" && input != "" {
 		mungeword(input, level)
-
-		writeMunge(output)
-
 	} else {
-		color.Error.Println("Input or wordlist required!")
+		return errors.New("input or wordlist required")
 	}
+
+	err := writeMunge(output)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
-func readWordList(path string) {
+func readWordList(path string) error {
 	readFile, err := os.Open(path)
-
 	if err != nil {
-		color.Error.Println("Error reading the file!")
+		return err
 	}
 	defer readFile.Close()
 
@@ -67,29 +69,34 @@ func readWordList(path string) {
 	for fileScanner.Scan() {
 		inputFileLines = append(inputFileLines, fileScanner.Text())
 	}
+
+	return nil
 }
 
-func writeMunge(fileName string) {
-
+func writeMunge(fileName string) error {
 	if fileName == "" {
 		fileName = "munge-passwords.txt"
 	}
 
 	file, err := os.OpenFile(fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-
 	if err != nil {
-		color.Error.Println("Failed creating file!")
+		return err
 	}
 	defer file.Close()
 
 	datawriter := bufio.NewWriter(file)
 
 	for _, data := range tmpWordList {
-		_, _ = datawriter.WriteString(data + "\n")
+		_, err := datawriter.WriteString(data + "\n")
+		if err != nil {
+			return err
+		}
 	}
 
 	color.Greenp("Saved to ", fileName, "\n")
 	datawriter.Flush()
+
+	return nil
 }
 
 func removeDuplication(arr []string) []string {
