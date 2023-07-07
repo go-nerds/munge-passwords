@@ -8,6 +8,11 @@ A little mapped Go script to munge dictionary words into possible passwords.
 
 ## Usage
 
+
+```bash
+  go run .
+```
+
 ```bash
 Usage: munge-passwords.exe --length LENGTH [--wordlist WORDLIST] --output OUTPUT [--r] [--input INPUT]
 
