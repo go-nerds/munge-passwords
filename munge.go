@@ -93,7 +93,7 @@ func writeMunge(fileName string) error {
 		}
 	}
 
-	color.Greenp("Saved to ", fileName, "\n")
+	color.Greenp("Saved to ", fileName, " With ", len(tmpWordList), " of Lines", "\n")
 	datawriter.Flush()
 
 	return nil
@@ -203,6 +203,7 @@ func mungeword(wrd string, level int) {
 		munge(wrd+"7", level)
 	}
 	if level > 7 {
+		munge(wrd+"00", level)
 		munge(wrd+"07", level)
 		munge(wrd+"08", level)
 		munge(wrd+"09", level)
