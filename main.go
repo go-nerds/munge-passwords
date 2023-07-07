@@ -9,7 +9,7 @@ import (
 	"github.com/gookit/color"
 )
 
-var args struct {
+type UserInput struct {
 	Level  int    `arg:"-l,required"`
 	Word   string `arg:"--wordlist,-w"`
 	Output string `arg:"-o,required"`
@@ -18,10 +18,14 @@ var args struct {
 }
 
 func main() {
-	arg.MustParse(&args)
+	userInput := UserInput{}
+	arg.MustParse(&userInput)
+
 	color.Yellowln("Processing...")
 	start := time.Now()
-	mungeInit(args.Level, args.Word, args.Output, args.D, args.Input)
+
+	mungeInit(userInput)
+
 	duration := time.Since(start)
 	color.Cyanln("Finished in:", duration)
 }

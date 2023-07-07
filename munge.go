@@ -11,7 +11,13 @@ import (
 var tmpWordList []string
 var inputFileLines []string
 
-func mungeInit(level int, wordlistPath string, fileName string, removeDuplicate bool, input string) {
+func mungeInit(arg UserInput) {
+
+	level := arg.Level
+	wordListPath := arg.Word
+	input := arg.Input
+	output := arg.Output
+	rDeplicate := arg.D
 
 	if level < 0 {
 		level = 0
@@ -21,11 +27,11 @@ func mungeInit(level int, wordlistPath string, fileName string, removeDuplicate 
 		level = 9
 	}
 
-	if wordlistPath != "" && input == "" {
+	if wordListPath != "" && input == "" {
 
-		readWordList(wordlistPath)
+		readWordList(wordListPath)
 
-		if removeDuplicate {
+		if rDeplicate {
 			inputFileLines = removeDuplication(inputFileLines)
 		}
 
@@ -33,14 +39,13 @@ func mungeInit(level int, wordlistPath string, fileName string, removeDuplicate 
 			mungeword(line, level)
 		}
 
-	} else if wordlistPath == "" && input != "" {
+	} else if wordListPath == "" && input != "" {
 		mungeword(input, level)
 	} else {
 		color.Error.Println("Input or wordlist required!")
 	}
 
-	writeMunge(fileName)
-
+	writeMunge(output)
 }
 
 func readWordList(path string) {
@@ -78,7 +83,7 @@ func writeMunge(fileName string) {
 		_, _ = datawriter.WriteString(data + "\n")
 	}
 
-	color.Greenp("Saved to ", args.Output, "\n")
+	color.Greenp("Saved to ", fileName, "\n")
 	datawriter.Flush()
 }
 
