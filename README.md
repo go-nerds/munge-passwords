@@ -14,10 +14,10 @@ A little mapped Go script to munge dictionary words into possible passwords.
 ```
 
 ```bash
-Usage: munge-passwords.exe --length LENGTH [--wordlist WORDLIST] --output OUTPUT [--r] [--input INPUT]
+Usage: munge-passwords.exe --level LEVEL [--wordlist WORDLIST] --output OUTPUT [--r] [--input INPUT]
 
 Options:
-  --level LENGTH, -l LENGTH
+  --level LEVEL, -l LEVEL
   --wordlist WORDLIST
   --output OUTPUT, -o OUTPUT
   --d, -d
