@@ -31,4 +31,6 @@ Options:
 - `--d` : Remove the duplicated record before munge from the provided list!
 - `-i` or  `--input` : To enter string!
 
-## License
+## LICENSE
+
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/go-nerds/munge-passwords/blob/main/LICENSE) file for details.
